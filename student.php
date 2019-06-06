@@ -2,9 +2,7 @@
 //学生界面总表
 //确认session
 session_start();
-if(isset($_SESSION['valid_user']))
-{}
-else{
+if (isset($_SESSION['valid_user'])) { } else {
     header('Location: http://localhost/demo/');
 }
 
@@ -14,30 +12,29 @@ else{
 <?php
 
 //输出公告
-function outPutNOtes(){
+function outPutNOtes()
+{
     $servername = "localhost";
     $username = "root";
     $password = "root";
     $dbname = "demo01";
     //创建连接
-    
-// 设置编码，防止中文乱码
+
+    // 设置编码，防止中文乱码
 
     $sql = 'SELECT Notes_title, Notes_author, 
             Notes_date
             FROM Notes';
-    $conn = mysqli_connect($servername,$username,$password,$dbname);
-    mysqli_query($conn , "set names utf8");
-    if (!$conn) 
-	{ 
-		die('Could not connect database: ' . mysql_error()); 
-	} 
-    $retval = mysqli_query( $conn, $sql );
-        if(! $retval )
-{
-    die('无法读取数据: ' . mysqli_error($conn));
-}
-echo '
+    $conn = mysqli_connect($servername, $username, $password, $dbname);
+    mysqli_query($conn, "set names utf8");
+    if (!$conn) {
+        die('Could not connect database: ' . mysql_error());
+    }
+    $retval = mysqli_query($conn, $sql);
+    if (!$retval) {
+        die('无法读取数据: ' . mysqli_error($conn));
+    }
+    echo '
 <div class="container">
 <h2 style="text-align: center">公告</h2>      
 <table class="table table-hover table-bordered">
@@ -49,19 +46,17 @@ echo '
     </tr>
   </thead>
   <tbody>';
-  while($row = mysqli_fetch_array($retval, MYSQLI_ASSOC))
-{
-    echo "<tr><td> {$row['Notes_title']}</td> ".
-         "<td>{$row['Notes_author']} </td> ".
-         "<td>{$row['Notes_date']} </td> ".
-         "</tr>";
-}
-echo'</tbody>
+    while ($row = mysqli_fetch_array($retval, MYSQLI_ASSOC)) {
+        echo "<tr><td> {$row['Notes_title']}</td> " .
+            "<td>{$row['Notes_author']} </td> " .
+            "<td>{$row['Notes_date']} </td> " .
+            "</tr>";
+    }
+    echo '</tbody>
 </table>
 </div>';
 
-mysqli_close($conn);
-
+    mysqli_close($conn);
 }
 
 ?>
@@ -96,14 +91,12 @@ mysqli_close($conn);
 
 
     <div class="header" style="height:80px">
-        <img src="http://localhost/demo/index_files/logo.png" class="img-rounded" style="border:none;float: left;"
-            height="50">
-        <img src="http://localhost/demo/student_files/logo_jw.png" class="img-rounded" style="border:none;float: left;"
-            height="50">
+        <img src="http://localhost/demo/index_files/logo.png" class="img-rounded" style="border:none;float: left;" height="50">
+        <img src="http://localhost/demo/student_files/logo_jw.png" class="img-rounded" style="border:none;float: left;" height="50">
 
 
 
-        <p style="float:right"><i class="fa fa-user" aria-hidden="true"></i> 用户:<?php echo $_SESSION['valid_user']?>
+        <p style="float:right"><i class="fa fa-user" aria-hidden="true"></i> 用户:<?php echo $_SESSION['valid_user'] ?>
         </p>
 
 
@@ -114,9 +107,9 @@ mysqli_close($conn);
 
         <!-- Links -->
         <ul class="navbar-nav">
-            
-                <a class="nav-link" href="javascript:void(0);" onclick="showHint(1)" >公告</a>
-           
+
+            <a class="nav-link" href="javascript:void(0);" onclick="showHint(1)">公告</a>
+
 
             <!-- Dropdown -->
             <li class="nav-item dropdown">
@@ -158,14 +151,14 @@ mysqli_close($conn);
                 </a>
                 <div class="dropdown-menu">
                     <a class="dropdown-item " href="#">专业推荐课表查询</a>
-                    <a class="dropdown-item " href="#">学生个人课表</a>
+                    <a class="dropdown-item " href="javascript:void(0);" onclick="showHint(4)">学生个人课表</a>
                     <a class="dropdown-item " href="#">学生考试查询</a>
-                    <a class="dropdown-item " href="#">成绩查询</a>
+                    <a class="dropdown-item " href="javascript:void(0);" onclick="showHint(5)">成绩查询</a>
                     <a class="dropdown-item " href="#">教室查询</a>
-                    <a class="dropdown-item " href="#">已选课程查询</a>
-                    <a class="dropdown-item " href="javascript:void(0);" onclick="this.innerHTML=Date()" >辅修推荐课表查询</a>
+                    <a class="dropdown-item " href="javascript:void(0);" onclick="showHint(4)">已选课程查询</a>
+                    <a class="dropdown-item " href="javascript:void(0);" onclick="this.innerHTML=Date()">辅修推荐课表查询</a>
                     <a class="dropdown-item " href="#">辅修培养方案查询</a>
-                    
+
                 </div>
             </li>
             <li class="nav-item dropdown">
@@ -178,20 +171,101 @@ mysqli_close($conn);
         </ul>
         <div class="collapse navbar-collapse justify-content-end">
             <ul class="navbar-nav" style="float:right">
-                <li><a href="#" class="nav-link"><i class="fa fa-sign-out " aria-hidden="true"></i> 登出</a></li>
+                <li><a href="javascript:void(0);" onclick="showHint(0)" class="nav-link"><i class="fa fa-sign-out " aria-hidden="true"></i> 登出</a></li>
             </ul>
         </div>
         <p class="color:red"></p>
     </nav>
 
- 
-   
-   <div id="bodysss">
-     
-  
+
+
+    <div id="bodysss">
+        <form>
+            <div class="container">
+                <h2 style="text-align: center">课程录入</h2>
+                <table class="table table-hover table-bordered">
+
+                    <thead>
+                        <tr>
+                            <th>学号</th>
+                            <th>学生姓名</th>
+                            <th>授课教师</th>
+                            <th>学分</th>
+                            <th>成绩</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><input type="text" class="form-control" name="Mark[]" value="1"> </td>
+                            <td>{$row['cname']} </td>
+                            <td>{$row['cteacher']} </td>
+                            <td>{$row['ccredit']} </td>
+                            <td> <input type="text" class="form-control" name="Mark[]" value="1"></td>
+                        </tr>
+                        <tr>
+                            <td>hehe </td>
+                            <td> </td>
+                            <td>{$row['cteacher']} </td>
+                            <td>{$row['ccredit']} </td>
+                            <td> <input type="text" class="form-control" name="Mark[]"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+
+            <?php
+            $servername = "localhost";
+            $username = "root";
+            $password = "root";
+            $dbname = "demo01";
+            //创建连接
+
+
+            $nameee = $_SESSION['valid_user'];
+            // 设置编码，防止中文乱码
+
+            $sql = "  SELECT cno , cname, cteacher,ccredit from course;";
+            $conn = mysqli_connect($servername, $username, $password, $dbname);
+            mysqli_query($conn, "set names utf8");
+            if (!$conn) {
+                die('Could not connect database: ' . mysql_error());
+            }
+            $retval = mysqli_query($conn, $sql);
+            if (!$retval) {
+                die('无法读取数据: ' . mysqli_error($conn));
+            }
+            //         echo '
+            // <div class="container">
+            // <h2 style="text-align: center">已选课程</h2>      
+            // <table class="table table-hover table-bordered">
+            // <thead>
+            // <tr>
+            //   <th>课程编号</th>
+            //   <th>课程名</th>
+            //   <th>授课教师</th>
+            //   <th>学分</th>
+            //   <th>成绩</th>
+            // </tr>
+            // </thead>
+            // <tbody>';
+            //         while ($row = mysqli_fetch_array($retval, MYSQLI_ASSOC)) {
+            //             echo "<tr><td> {$row['cno']}</td> " .
+            //                 "<td>{$row['cname']} </td> " .
+            //                 "<td>{$row['cteacher']} </td> " .
+            //                 "<td>{$row['ccredit']} </td> " .
+            //                 "<td> <button type=\"button\" class=\"btn\">选课</button></td> " .
+            //                 "</tr>";
+            //         }
+            //         echo '</tbody>
+            // </table>
+            // </div>';
+
+            mysqli_close($conn);
+            ?>
     </div>
 
-   
+
 
 
 
@@ -208,51 +282,41 @@ mysqli_close($conn);
 
     <script>
         //检查两次密码是否相同，因颜色问题，暂时放在这里
-            function checkpwd(){
-                var new1=document.getElementById("pwd").value;
-                var new2=document.getElementById("npwd").value;
-                if(new1 == new2) {
-                              document.getElementById("tishi").innerHTML="<p style='color:green'> 两次密码相同</p>";
-                              document.getElementById("submit").disabled = false;
-                          }
-                          else {
-                              document.getElementById("tishi").innerHTML="<p style='color:red'>两次密码不同 </p>";
-                            document.getElementById("submit").disabled = true;
-                          }
+        function checkpwd() {
+            var new1 = document.getElementById("pwd").value;
+            var new2 = document.getElementById("npwd").value;
+            if (new1 == new2) {
+                document.getElementById("tishi").innerHTML = "<p style='color:green'> 两次密码相同</p>";
+                document.getElementById("submit").disabled = false;
+            } else {
+                document.getElementById("tishi").innerHTML = "<p style='color:red'>两次密码不同 </p>";
+                document.getElementById("submit").disabled = true;
             }
-            </script>
-    <script>
-
-
-function showHint(str){
-   
-    //ajax 调用php
-    if (window.XMLHttpRequest)
-    {
-        // IE7+, Firefox, Chrome, Opera, Safari 浏览器执行的代码
-        xmlhttp=new XMLHttpRequest();
-    }
-    else
-    {    
-        //IE6, IE5 浏览器执行的代码
-        xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-    }
-    xmlhttp.onreadystatechange=function()
-    {
-        if (xmlhttp.readyState==4 && xmlhttp.status==200)
-        {
-            document.getElementById("bodysss").innerHTML=xmlhttp.responseText;
         }
-    }
-    xmlhttp.open("GET","public/notes.php?q="+str,true);
-    xmlhttp.send()
+    </script>
 
-}
+    <script>
+        function showHint(str) {
 
+            //ajax 调用php
+            if (window.XMLHttpRequest) {
+                // IE7+, Firefox, Chrome, Opera, Safari 浏览器执行的代码
+                xmlhttp = new XMLHttpRequest();
+            } else {
+                //IE6, IE5 浏览器执行的代码
+                xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+            xmlhttp.onreadystatechange = function() {
+                if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                    document.getElementById("bodysss").innerHTML = xmlhttp.responseText;
+                }
+            }
+            xmlhttp.open("GET", "public/notes.php?q=" + str, true);
+            xmlhttp.send()
 
-</script>
+        }
+    </script>
 
 </body>
 
 </html>
-

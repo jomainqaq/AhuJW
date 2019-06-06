@@ -36,7 +36,9 @@ if($result = mysqli_num_rows($check_query)){
 
 		break;
 		case 1:
-
+		header('Location: http://localhost/demo/teacher.php ');
+		session_start();
+		$_SESSION['valid_user']=$LogName;
 		break;
 		case 2:
 		header('Location: http://localhost/demo/student.php');

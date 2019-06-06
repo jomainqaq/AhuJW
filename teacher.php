@@ -188,7 +188,64 @@ mysqli_close($conn);
    
    <div id="bodysss">
      
-  
+  <?php 
+    $servername = "localhost";
+    $username = "root";
+    $password = "root";
+    $dbname = "demo01";
+    //创建连接
+    $nameee = $_SESSION['valid_user'];
+// 设置编码，防止中文乱码
+
+    $sql = "  SELECT student.sno,sname,cteacher,ccredit, grade from student,sc,course,teacher where teacher.tno ='1001' and teacher.tno=sc.tno and course.cno=sc.cno and student.sno=sc.sno;";
+    $conn = mysqli_connect($servername,$username,$password,$dbname);
+    mysqli_query($conn , "set names utf8");
+    if (!$conn) 
+	{ 
+		die('Could not connect database: ' . mysql_error()); 
+	} 
+    $retval = mysqli_query( $conn, $sql );
+        if(! $retval )
+{
+    die('无法读取数据: ' . mysqli_error($conn));
+}
+echo '
+<form action="teacher_files\inputGrade.php"  method="POST" >
+<div class="container">
+<h2 style="text-align: center">成绩录入</h2>      
+<table class="table table-hover table-bordered">
+  <thead>
+    <tr>
+      <th>学号</th>
+      <th>姓名</th>
+      <th>授课教师</th>
+      <th>学分</th>
+      <th>分数</th>
+    </tr>
+  </thead>
+  <tbody>';
+  while($row = mysqli_fetch_array($retval, MYSQLI_ASSOC))
+{
+    echo "<tr><td width=\"200px\"> <input type=\"text\" class=\"input-small\" name=\"stu[]\" value= {$row['sno']}></td> ".
+         "<td>{$row['sname']} </td> ".
+         "<td>{$row['cteacher']} </td> ".
+         "<td>{$row['ccredit']} </td> ".
+         "<td width=\"200px\"> <input type=\"text\" class=\"input-small\" name=\"mark[]\" placeholder=\"成绩\"> </td> ".       
+         "</tr>";
+}
+echo'</tbody>
+</table>
+<button style="float:right" type="submit" id="submit" class="btn btn-sm">Submit</button>
+</div>
+</form>';
+
+mysqli_close($conn);
+
+?>
+
+
+
+
     </div>
 
    
