@@ -33,6 +33,9 @@ if($result = mysqli_num_rows($check_query)){
 	echo $userIdenty["Identity"];
 	switch($userIdenty["Identity"]){
 		case 0:
+		header('Location: http://localhost/demo/admin.php');
+		session_start();
+		$_SESSION['valid_user']=$LogName;
 
 		break;
 		case 1:

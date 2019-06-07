@@ -2,9 +2,10 @@
 //学生界面总表
 //确认session
 session_start();
-if (isset($_SESSION['valid_user'])) { } else {
-    header('Location: http://localhost/demo/');
-}
+if (isset($_SESSION['valid_user'])) { }
+// else{
+//     header('Location: http://localhost/demo/');
+// }
 
 
 ?>
@@ -59,7 +60,6 @@ function outPutNOtes()
 
     mysqli_close($conn);
 }
-
 
 ?>
 
@@ -116,19 +116,18 @@ function outPutNOtes()
             <!-- Dropdown -->
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle " href="#" id="navbardrop" data-toggle="dropdown">
-                    网上选课
+                    课程管理
                 </a>
                 <div class="dropdown-menu">
-                    <a class="dropdown-item " href="javascript:void(0);" onclick="showHint(8)">学生选课</a>
-                    <a class="dropdown-item " href="#">辅修选课</a>
+                    <a class="dropdown-item " href="javascript:void(0);" onclick="showHint(13)">课程录入</a>
                 </div>
             </li>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle " href="#" id="navbardrop" data-toggle="dropdown">
-                    报名申请
+                    学生成绩
                 </a>
                 <div class="dropdown-menu">
-                    <a class="dropdown-item " href="#">网上报名</a>
+                    <a class="dropdown-item " href="#" >成绩录入</a>
                     <a class="dropdown-item " href="#">缓考申请</a>
                 </div>
             </li>
@@ -143,33 +142,25 @@ function outPutNOtes()
                     信息维护
                 </a>
                 <div class="dropdown-menu">
-                    <a class="dropdown-item " href="javascript:void(0);" onclick="showHint(3)">个人信息修改</a>
-                    <a class="dropdown-item " href="javascript:void(0);" onclick="showHint(2)">密码修改</a>
-                </div>
-            </li>
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle " href="#" id="navbardrop" data-toggle="dropdown">
-                    信息查询
-                </a>
-                <div class="dropdown-menu">
-                    <a class="dropdown-item " href="#">专业推荐课表查询</a>
-                    <a class="dropdown-item " href="javascript:void(0);" onclick="showHint(4)">学生个人课表</a>
-                    <a class="dropdown-item " href="#">学生考试查询</a>
-                    <a class="dropdown-item " href="javascript:void(0);" onclick="showHint(5)">成绩查询</a>
-                    <a class="dropdown-item " href="#">教室查询</a>
-                    <a class="dropdown-item " href="javascript:void(0);" onclick="showHint(4)">已选课程查询</a>
-                    <a class="dropdown-item " href="javascript:void(0);" onclick="this.innerHTML=Date()">辅修推荐课表查询</a>
-                    <a class="dropdown-item " href="#">辅修培养方案查询</a>
 
+                    <a class="dropdown-item " href="javascript:void(0);" onclick="showHint(12)">密码修改</a>
                 </div>
             </li>
+
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle " href="#" id="navbardrop" data-toggle="dro pdown">
                     毕业论文管理
                 </a>
 
             </li>
-
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle " href="#" id="navbardrop" data-toggle="dropdown">
+                    公告管理
+                </a>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item " href="javascript:void(0);" onclick="showHint(11)">公告录入</a>
+                </div>
+            </li>
         </ul>
         <div class="collapse navbar-collapse justify-content-end">
             <ul class="navbar-nav" style="float:right">
@@ -183,7 +174,7 @@ function outPutNOtes()
 
     <div id="bodysss">
 
-        <?php outPutNOtes();
+        <?php   outPutNOtes();
         ?>
 
     </div>
@@ -217,7 +208,6 @@ function outPutNOtes()
             }
         }
     </script>
-
     <script>
         function showHint(str) {
 
@@ -235,57 +225,6 @@ function outPutNOtes()
                 }
             }
             xmlhttp.open("GET", "public/notes.php?q=" + str, true);
-            xmlhttp.send()
-
-        }
-    </script>
-
-
-    <script>
-        //选课
-        function CourseSelect(str) {
-
-            //ajax 调用php
-            if (window.XMLHttpRequest) {
-                // IE7+, Firefox, Chrome, Opera, Safari 浏览器执行的代码
-                xmlhttp = new XMLHttpRequest();
-            } else {
-                //IE6, IE5 浏览器执行的代码
-                xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-            }
-            xmlhttp.onreadystatechange = function() {
-                if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-                    document.getElementById("bodysss").innerHTML = xmlhttp.responseText;
-                    // alert(xmlhttp.responseText) ;
-                    //showHint(8)；
-
-                }
-            }
-            xmlhttp.open("GET", "student_files/CourseSelect.php?q=" + str, true);
-            xmlhttp.send()
-
-        }
-    </script>
-    <script>
-        //退课
-        function CourseDelete(str) {
-
-            //ajax 调用php
-            if (window.XMLHttpRequest) {
-                // IE7+, Firefox, Chrome, Opera, Safari 浏览器执行的代码
-                xmlhttp = new XMLHttpRequest();
-            } else {
-                //IE6, IE5 浏览器执行的代码
-                xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-            }
-            xmlhttp.onreadystatechange = function() {
-                if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-                    document.getElementById("bodysss").innerHTML = xmlhttp.responseText;
-                    // alert(xmlhttp.responseText) ;
-
-                }
-            }
-            xmlhttp.open("GET", "student_files/CourseDelete.php?q=" + str, true);
             xmlhttp.send()
 
         }
@@ -311,7 +250,6 @@ function outPutNOtes()
 
         }
     </script>
-
 
 </body>
 
